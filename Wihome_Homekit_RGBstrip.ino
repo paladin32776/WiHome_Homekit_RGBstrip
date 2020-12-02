@@ -18,6 +18,7 @@
 
 WiHomeComm whc(false);
 bool initial_connect = true;
+bool initial_update = true;
 
 NoBounceButtons nbb;
 char button0;
@@ -62,6 +63,8 @@ void loop()
 		nbb.reset(button0);
 	}
 
+	initial_characteristics_update();
+
 	if ((whc.status() == WIHOMECOMM_CONNECTED) && initial_connect)
 	{
 		my_homekit_setup();
@@ -71,6 +74,23 @@ void loop()
 		my_homekit_loop();
 
 	delay(10);
+}
+
+// Inital update of homekit characteristics
+void initial_characteristics_update()
+{
+	if (!initial_connect && initial_update)
+	{
+		cha_on.value.bool_value = (rgbstrip.get_on()>0?true:false);
+		homekit_characteristic_notify(&cha_on, cha_on.value);
+		cha_hue.value.float_value = (float)rgbstrip.get_hue();
+		homekit_characteristic_notify(&cha_hue, cha_hue.value);
+		cha_sat.value.float_value = (float)rgbstrip.get_saturation();
+		homekit_characteristic_notify(&cha_sat, cha_sat.value);
+		cha_bright.value.int_value = (int)rgbstrip.get_brightness();
+		homekit_characteristic_notify(&cha_bright, cha_bright.value);
+		initial_update = false;
+	}
 }
 
 //==============================
