@@ -23,7 +23,7 @@ bool initial_update = true;
 NoBounceButtons nbb;
 char button0;
 SignalLED led(15, SLED_OFF, false);
-RGBstrip rgbstrip(13,4,12,false);
+RGBstrip rgbstrip(12,4,13,false);
 
 // access the HomeKit characteristics defined in my_accessory.c
 extern "C" homekit_server_config_t accessory_config;
@@ -31,8 +31,11 @@ extern "C" homekit_characteristic_t cha_on;
 extern "C" homekit_characteristic_t cha_bright;
 extern "C" homekit_characteristic_t cha_sat;
 extern "C" homekit_characteristic_t cha_hue;
+extern "C" homekit_characteristic_t cha_name;
+extern "C" homekit_characteristic_t cha_name_accessory;
 
 static uint32_t next_heap_millis = 0;
+char client_name[32];
 
 void setup()
 {
@@ -44,6 +47,9 @@ void setup()
 	rgbstrip.set_hsv(0,0,100);
 	if (whc.is_homekit_reset())
 		homekit_storage_reset();
+	// strcpy(client_name, "WiHome_YYY");
+	// cha_name.value.string_value = client_name;
+	// homekit_characteristic_notify(&cha_name, cha_name.value);
 }
 
 void loop()
@@ -67,6 +73,9 @@ void loop()
 
 	if ((whc.status() == WIHOMECOMM_CONNECTED) && initial_connect)
 	{
+		whc.get_client_name(client_name);
+		cha_name_accessory.value.string_value = client_name;
+		cha_name.value.string_value = client_name;
 		my_homekit_setup();
 		initial_connect = false;
 	}
