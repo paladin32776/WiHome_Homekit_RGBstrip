@@ -1,7 +1,7 @@
 /*
- * ESP8266_homekit_rgbstrip.ino
+ * Wihome_Homekit_RGBstrip.ino
  *
- *  Created on: 2020-11-15
+ *  Created on: 2020-12-06
  *      Author: Gernot Fattinger
  *
  * Control a RGB LED strip through homekit.
@@ -47,9 +47,6 @@ void setup()
 	rgbstrip.set_hsv(0,0,100);
 	if (whc.is_homekit_reset())
 		homekit_storage_reset();
-	// strcpy(client_name, "WiHome_YYY");
-	// cha_name.value.string_value = client_name;
-	// homekit_characteristic_notify(&cha_name, cha_name.value);
 }
 
 void loop()
