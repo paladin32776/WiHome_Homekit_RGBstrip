@@ -1,9 +1,9 @@
 /*
- * my_accessory.c
+ * RGBstrip_accessory.c
  * Define the accessory in C language using the Macro in characteristics.h
  *
- *  Created on: 2020-05-15
- *      Author: Mixiaoxiao (Wang Bin)
+ *  Created on: 2020-12-06
+ *      Author: Gernot Fattinger
  */
 
 #include <homekit/homekit.h>
@@ -13,8 +13,6 @@ void my_accessory_identify(homekit_value_t _value)
 {
 	printf("accessory identify\n");
 }
-
-char a[] = "AAAtest";
 
 homekit_characteristic_t cha_on = HOMEKIT_CHARACTERISTIC_(ON, false);
 homekit_characteristic_t cha_name = HOMEKIT_CHARACTERISTIC_(NAME, "wihome_hk_rgb_1");
