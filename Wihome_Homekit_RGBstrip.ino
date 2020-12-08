@@ -25,7 +25,7 @@ char button0;
 SignalLED led(15, SLED_OFF, false);
 RGBstrip rgbstrip(12,4,13,false);
 
-// access the HomeKit characteristics defined in my_accessory.c
+// access the HomeKit characteristics defined in RGBstrip_accessory.c
 extern "C" homekit_server_config_t accessory_config;
 extern "C" homekit_characteristic_t cha_on;
 extern "C" homekit_characteristic_t cha_bright;
